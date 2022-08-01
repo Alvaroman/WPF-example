@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ReserRoom
+namespace ReserRoom.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Lógica de interacción para ReservationListingView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ReservationListingView : UserControl
     {
-        public MainWindow()
+        public ReservationListingView()
         {
             InitializeComponent();
         }
