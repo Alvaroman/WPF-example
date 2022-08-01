@@ -1,0 +1,14 @@
+﻿<Window x:Class="ReserRoom.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReserRoom"
+        mc:Ignorable="d"
+        Title="ReserRoom" Height="450" Width="800">
+    <Grid Margin="10">
+        <Button x:Name="button" Click="button_Click" Margin="415,121,41,207"/>
+        <TextBox x:Name="myTextbox" TextWrapping="Wrap" Text="TextBox" Margin="10,142,549,228"/>
+    </Grid>
+
+</Window>
