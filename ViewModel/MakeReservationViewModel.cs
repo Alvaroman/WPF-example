@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ReserRoom.Commands;
+using System;
+using System.Windows.Input;
 
 namespace ReserRoom.ViewModel;
 public class MakeReservationViewModel : ViewModelBase
@@ -46,5 +48,10 @@ public class MakeReservationViewModel : ViewModelBase
         set { _endDate = value; OnPropertyChanged(nameof(EndDate)); }
     }
     private DateTime _endDate;
-
+    public ICommand SubmitCommand { get; }
+    public ICommand CancelCommand { get; }
+    public MakeReservationViewModel()
+    {
+        SubmitCommand = new MakeReservationCommand();
+    }
 }
