@@ -21,6 +21,6 @@ public class Reservation
         {
             return false;
         }
-        return incommingReservation.StartTime < EndTime || incommingReservation.EndTime < EndTime;
+        return incommingReservation.StartTime <= EndTime || incommingReservation.EndTime <= EndTime;
     }
 }

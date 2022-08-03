@@ -1,4 +1,5 @@
 ﻿using ReserRoom.Commands;
+using ReserRoom.Model;
 using System;
 using System.Windows.Input;
 
@@ -13,6 +14,7 @@ public class MakeReservationViewModel : ViewModelBase
         {
             _userName = value;
             OnPropertyChanged(nameof(UserName));
+
         }
     }
     private int _floorNumber;
@@ -22,7 +24,6 @@ public class MakeReservationViewModel : ViewModelBase
         {
             _floorNumber = value;
             OnPropertyChanged(nameof(FloorNumber));
-
         }
     }
     private int _roomNumber;
@@ -41,17 +42,19 @@ public class MakeReservationViewModel : ViewModelBase
         set { _startDate = value; OnPropertyChanged(nameof(StartDate)); }
     }
 
-    private DateTime _startDate;
+    private DateTime _startDate = DateTime.Now.AddMonths(1);
     public DateTime EndDate
     {
         get => _endDate;
         set { _endDate = value; OnPropertyChanged(nameof(EndDate)); }
     }
-    private DateTime _endDate;
+    private DateTime _endDate = DateTime.Now.AddDays(45);
     public ICommand SubmitCommand { get; }
     public ICommand CancelCommand { get; }
-    public MakeReservationViewModel()
+    public MakeReservationViewModel(Hotel hotel, 
+                                    Services.NavigationService reservationViewNavigationService)
     {
-        SubmitCommand = new MakeReservationCommand();
+        SubmitCommand = new MakeReservationCommand(this, hotel, reservationViewNavigationService);
+        CancelCommand = new NavigateCommand(reservationViewNavigationService);
     }
 }
