@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ReserRoom.Views" xmlns:converters="clr-namespace:ReserRoom.Converters" xmlns:loadingspinnercontrol="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
+             xmlns:local="clr-namespace:ReserRoom.Views" xmlns:converters="clr-namespace:ReserRoom.Converters" xmlns:custom="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              mc:Ignorable="d" 
            d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -31,15 +31,15 @@
         <Grid  
             Grid.Row="1" 
             Margin="0 25 0 0" >
-            <loadingspinnercontrol:LoadingSpinner 
+            <custom:LoadingSpinner
                Thickness="5"  
                 Diameter="100"
-                IsLoading="{Binding Isloading}"
+                IsLoading="{Binding IsLoading}"
                 Color="Gray">
-            </loadingspinnercontrol:LoadingSpinner>
+            </custom:LoadingSpinner>
             <ListView  
             ItemsSource="{Binding Reservations}"
-            Visibility="{Binding IsLoading, Converter= {StaticResource InverterBooleanToVisibilityConvert}}">
+            Visibility="{Binding IsLoading, Converter={StaticResource InverterBooleanToVisibilityConvert}}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

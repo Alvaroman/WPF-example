@@ -24,12 +24,12 @@ namespace ReserRoom.Commands
                 _viewModel.IsLoading = true;
                 await _hotelStore.Load();
                 _viewModel.UpdateReservation(_hotelStore.Reservations);
-                _viewModel.IsLoading = false;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed. {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            _viewModel.IsLoading = false;
         }
     }
 }

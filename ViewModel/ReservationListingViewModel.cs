@@ -16,10 +16,11 @@ public class ReservationListingViewModel : ViewModelBase
 
     public bool IsLoading
     {
-        get => _isLoading; set
+        get => _isLoading;
+        set
         {
             _isLoading = value;
-            OnPropertyChanged(nameof(_isLoading));
+            OnPropertyChanged(nameof(IsLoading));
         }
     }
 

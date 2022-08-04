@@ -2,10 +2,14 @@
 using ReserRoom.Model;
 using ReserRoom.Stores;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace ReserRoom.ViewModel;
-public class MakeReservationViewModel : ViewModelBase
+public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
 {
     private string _userName;
     public string UserName
@@ -47,15 +51,36 @@ public class MakeReservationViewModel : ViewModelBase
     public DateTime EndDate
     {
         get => _endDate;
-        set { _endDate = value; OnPropertyChanged(nameof(EndDate)); }
+        set
+        {
+            _endDate = value;
+            OnPropertyChanged(nameof(EndDate));
+            _propertyNameToErrorsDictionary.Remove(nameof(EndDate));
+            if (EndDate < StartDate)
+            {
+                List<string> endDateErros = new List<string>()
+                {
+                "The end date cannot be before the start date."
+                };
+                _propertyNameToErrorsDictionary.Add(nameof(EndDate), endDateErros);
+                ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(EndDate)));
+            }
+        }
     }
     private DateTime _endDate = DateTime.Now.AddDays(45);
+
     public ICommand SubmitCommand { get; }
     public ICommand CancelCommand { get; }
-    public MakeReservationViewModel(HotelStore hotelStore, 
+
+    public readonly Dictionary<string, List<string>> _propertyNameToErrorsDictionary;
+    public MakeReservationViewModel(HotelStore hotelStore,
                                     Services.NavigationService reservationViewNavigationService)
     {
         SubmitCommand = new MakeReservationCommand(this, hotelStore, reservationViewNavigationService);
         CancelCommand = new NavigateCommand(reservationViewNavigationService);
     }
+
+    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+    public bool HasErrors => _propertyNameToErrorsDictionary is not null && _propertyNameToErrorsDictionary.Any();
+    public IEnumerable GetErrors(string? propertyName) => _propertyNameToErrorsDictionary.GetValueOrDefault(propertyName, new List<string>());
 }
