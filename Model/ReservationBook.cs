@@ -1,25 +1,33 @@
 ﻿using ReserRoom.Exeptions;
+using ReserRoom.Services;
+using ReserRoom.Services.ReservationConflictValidator;
+using ReserRoom.Services.ReservationProviders;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ReserRoom.Model;
 public class ReservationBook
 {
-    private readonly List<Reservation> _roomsToReservation;
-    public ReservationBook()
+    private readonly IReservationProvider _reservationProvider;
+    private readonly IReservationCreator _reservationCreator;
+    private readonly IReservationConflictValidator _reservationConflictValidator;
+    public ReservationBook(IReservationProvider reservationProvider, IReservationCreator reservationCreator, IReservationConflictValidator reservationConflictValidator)
     {
-        _roomsToReservation = new List<Reservation>();
+        this._reservationProvider = reservationProvider;
+        this._reservationCreator = reservationCreator;
+        _reservationConflictValidator = reservationConflictValidator;
     }
-    public IEnumerable<Reservation> GetAllReservations() => this._roomsToReservation;
-    public void AddReservation(Reservation reservation)
+    public async Task<IEnumerable<Reservation>> GetAllReservations()
+                        => await this._reservationProvider.GetAllReservation();
+    public async Task AddReservation(Reservation reservation)
     {
-        foreach (var existingReservation in _roomsToReservation)
+        Reservation conflictingReservation =
+                    await _reservationConflictValidator.GetConflictingReservation(reservation);
+        if (conflictingReservation != null)
         {
-            if (existingReservation.Conflicts(reservation))
-            {
-                throw new ReservationConflicException("There's a conflict with the reservation dates.", existingReservation, reservation);
-            }
+            throw new ReservationConflicException("There's a conflict with the reservation dates.", conflictingReservation, reservation);
         }
-        this._roomsToReservation.Add(reservation);
+        await _reservationCreator.CreateReservation(reservation);
     }
 }
