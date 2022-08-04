@@ -6,20 +6,21 @@ using System.Windows;
 using ReserRoom.Services;
 using System.Threading.Tasks;
 using System;
+using ReserRoom.Stores;
 
 namespace ReserRoom.Commands;
 public class MakeReservationCommand : AsyncCommandBase
 {
     private readonly MakeReservationViewModel _makeReservationViewModel;
-    private readonly Hotel _hotel;
+    private readonly HotelStore _hotelStore;
     private readonly NavigationService _reservationViewNavigationService;
 
     public MakeReservationCommand(ViewModel.MakeReservationViewModel makeReservationViewModel,
-        Hotel hotel,
+        HotelStore hotelStore,
         NavigationService reservationViewNavigationService)
     {
         this._makeReservationViewModel = makeReservationViewModel;
-        this._hotel = hotel;
+        this._hotelStore = hotelStore;
         this._reservationViewNavigationService = reservationViewNavigationService;
         _makeReservationViewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
@@ -49,7 +50,7 @@ public class MakeReservationCommand : AsyncCommandBase
             _makeReservationViewModel.EndDate);
         try
         {
-            await _hotel.MakeReservation(reservation);
+            await _hotelStore.MakeReservation(reservation);
             MessageBox.Show("Successfully reserved room.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             _reservationViewNavigationService.Navigate();
         }

@@ -22,7 +22,7 @@ namespace ReserRoom;
 public partial class App : Application
 {
     private const string stringConnection = "Data source=reservroom.db";
-    private readonly Hotel _hotel;
+    private readonly HotelStore _hotelStore;
     private readonly NavigationStore _navigationStore;
     private readonly ReservRoomDbContextFactory _reservRoomDbContextFactory;
     public App()
@@ -33,12 +33,11 @@ public partial class App : Application
         IReservationConflictValidator reservationConflictValidator = new DatabaseReservationConflictValidator(_reservRoomDbContextFactory);
 
         ReservationBook reservationBook = new ReservationBook(reservationProvider, reservationCreator, reservationConflictValidator);
-        _hotel = new Hotel("Pacific Resort", reservationBook);
+        _hotelStore = new HotelStore(new Hotel("Pacific Resort", reservationBook));
         _navigationStore = new NavigationStore();
     }
     protected override void OnStartup(StartupEventArgs e)
     {
-        var options = new DbContextOptionsBuilder().UseSqlite(stringConnection).Options;
         using (ReserRoomDbContext dbContext = _reservRoomDbContextFactory.CreateDbContext())
         {
             dbContext.Database.Migrate();
@@ -51,13 +50,13 @@ public partial class App : Application
         MainWindow.Show();
         base.OnStartup(e);
     }
-    private MakeReservationViewModel CreateReservationListingViewModel()
+    private MakeReservationViewModel CreateMakeReservationViewModel()
     {
-        return new MakeReservationViewModel(_hotel, new NavigationService(_navigationStore, CreateReservationViewModel));
+        return new MakeReservationViewModel(_hotelStore, new NavigationService(_navigationStore, CreateReservationViewModel));
     }
 
     private ReservationListingViewModel CreateReservationViewModel()
     {
-        return ReservationListingViewModel.LoadViewModel(_hotel, new NavigationService(_navigationStore, CreateReservationListingViewModel));
+        return ReservationListingViewModel.LoadViewModel(_hotelStore, new NavigationService(_navigationStore, CreateMakeReservationViewModel));
     }
 }

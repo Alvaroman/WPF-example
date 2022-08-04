@@ -1,9 +1,6 @@
-﻿using ReserRoom.Model;
+﻿using ReserRoom.Stores;
 using ReserRoom.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -12,20 +9,20 @@ namespace ReserRoom.Commands
     internal class LoadReservationCommand : AsyncCommandBase
     {
         private readonly ReservationListingViewModel _viewModel;
-        private readonly Hotel _hotel;
+        private readonly HotelStore _hotelStore;
 
-        public LoadReservationCommand(ReservationListingViewModel viewModel, Hotel hotel)
+        public LoadReservationCommand(ReservationListingViewModel viewModel, HotelStore hotelStore)
         {
             _viewModel = viewModel;
-            _hotel = hotel;
+            _hotelStore = hotelStore;
         }
 
         public override async Task ExecuteAsync(object? parameter)
         {
             try
             {
-                IEnumerable<Reservation> reservations = await _hotel.GetAllReservations();
-                _viewModel.UpdateReservation(reservations);
+                await _hotelStore.Load();
+                _viewModel.UpdateReservation(_hotelStore.Reservations);
             }
             catch (Exception ex)
             {

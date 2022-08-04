@@ -1,5 +1,6 @@
 ﻿using ReserRoom.Commands;
 using ReserRoom.Model;
+using ReserRoom.Stores;
 using System;
 using System.Windows.Input;
 
@@ -51,10 +52,10 @@ public class MakeReservationViewModel : ViewModelBase
     private DateTime _endDate = DateTime.Now.AddDays(45);
     public ICommand SubmitCommand { get; }
     public ICommand CancelCommand { get; }
-    public MakeReservationViewModel(Hotel hotel, 
+    public MakeReservationViewModel(HotelStore hotelStore, 
                                     Services.NavigationService reservationViewNavigationService)
     {
-        SubmitCommand = new MakeReservationCommand(this, hotel, reservationViewNavigationService);
+        SubmitCommand = new MakeReservationCommand(this, hotelStore, reservationViewNavigationService);
         CancelCommand = new NavigateCommand(reservationViewNavigationService);
     }
 }
