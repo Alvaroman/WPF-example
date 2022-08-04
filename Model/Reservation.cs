@@ -14,13 +14,4 @@ public class Reservation
     public DateTime StartTime { get; }
     public DateTime EndTime { get; }
     public TimeSpan Length => EndTime.Subtract(StartTime);
-
-    public bool Conflicts(Reservation incommingReservation)
-    {
-        if (incommingReservation.RoomId != RoomId)
-        {
-            return false;
-        }
-        return incommingReservation.StartTime <= EndTime || incommingReservation.EndTime <= EndTime;
-    }
 }
