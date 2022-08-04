@@ -12,6 +12,16 @@ public class ReservationListingViewModel : ViewModelBase
 {
     private readonly ObservableCollection<ReservationViewModel> _reservations;
     private readonly HotelStore _hotelStore;
+    private bool _isLoading;
+
+    public bool IsLoading
+    {
+        get => _isLoading; set
+        {
+            _isLoading = value;
+            OnPropertyChanged(nameof(_isLoading));
+        }
+    }
 
     public IEnumerable<ReservationViewModel> Reservations => _reservations;
     public ICommand MakeReservationCommand { get; }
@@ -29,7 +39,7 @@ public class ReservationListingViewModel : ViewModelBase
     }
     public override void Dispose()
     {
-        _hotelStore.ReservationMade -= OnReservationMade; 
+        _hotelStore.ReservationMade -= OnReservationMade;
         base.Dispose();
     }
     private void OnReservationMade(Reservation reservation)

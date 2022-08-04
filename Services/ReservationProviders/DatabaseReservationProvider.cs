@@ -20,6 +20,7 @@ public class DatabaseReservationProvider : IReservationProvider
         using (ReserRoomDbContext context = _dbContextFactory.CreateDbContext())
         {
             IEnumerable<ReservationDTO> reservationDTOs = await context.Reservation.ToListAsync();
+            await Task.Delay(2000);
             return reservationDTOs.Select(r => ToReservation(r));
         }
     }

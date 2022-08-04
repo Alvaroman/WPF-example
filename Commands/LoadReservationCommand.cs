@@ -21,8 +21,10 @@ namespace ReserRoom.Commands
         {
             try
             {
+                _viewModel.IsLoading = true;
                 await _hotelStore.Load();
                 _viewModel.UpdateReservation(_hotelStore.Reservations);
+                _viewModel.IsLoading = false;
             }
             catch (Exception ex)
             {
