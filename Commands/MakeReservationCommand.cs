@@ -29,7 +29,9 @@ public class MakeReservationCommand : AsyncCommandBase
     {
         if (e.PropertyName == nameof(MakeReservationViewModel.UserName)
             || e.PropertyName == nameof(MakeReservationViewModel.FloorNumber)
-            || e.PropertyName == nameof(MakeReservationViewModel.RoomNumber))
+            || e.PropertyName == nameof(MakeReservationViewModel.RoomNumber)
+            || e.PropertyName == nameof(MakeReservationViewModel.StartDate)
+            || e.PropertyName == nameof(MakeReservationViewModel.EndDate))
         {
             OnCanExecutedChanged();
         }

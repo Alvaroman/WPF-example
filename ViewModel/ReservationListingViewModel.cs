@@ -23,7 +23,18 @@ public class ReservationListingViewModel : ViewModelBase
             OnPropertyChanged(nameof(IsLoading));
         }
     }
-
+    private string _errorMessage;
+    public string ErrorMessage
+    {
+        get => _errorMessage;
+        set
+        {
+            _errorMessage = value;
+            OnPropertyChanged(nameof(ErrorMessage));
+            OnPropertyChanged(nameof(HasErrorMessage));
+        }
+    }
+    public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
     public IEnumerable<ReservationViewModel> Reservations => _reservations;
     public ICommand MakeReservationCommand { get; }
     public ICommand LoadReservationCommand { get; }

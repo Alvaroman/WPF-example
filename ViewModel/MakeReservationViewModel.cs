@@ -44,7 +44,17 @@ public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
     public DateTime StartDate
     {
         get => _startDate;
-        set { _startDate = value; OnPropertyChanged(nameof(StartDate)); }
+        set
+        {
+            _startDate = value;
+            OnPropertyChanged(nameof(StartDate));
+            ClearErros(nameof(StartDate));
+            ClearErros(nameof(EndDate));
+            if (EndDate < StartDate)
+            {
+                AddError("The start date cannot be before the end date.", nameof(StartDate));
+            }
+        }
     }
 
     private DateTime _startDate = DateTime.Now.AddMonths(1);
@@ -55,18 +65,36 @@ public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
         {
             _endDate = value;
             OnPropertyChanged(nameof(EndDate));
-            _propertyNameToErrorsDictionary.Remove(nameof(EndDate));
+            ClearErros(nameof(StartDate));
+            ClearErros(nameof(EndDate));
             if (EndDate < StartDate)
             {
-                List<string> endDateErros = new List<string>()
-                {
-                "The end date cannot be before the start date."
-                };
-                _propertyNameToErrorsDictionary.Add(nameof(EndDate), endDateErros);
-                ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(EndDate)));
+                AddError("The end date cannot be before the start date.", nameof(EndDate));
             }
         }
     }
+
+    private void AddError(string errorMessage, string propertyName)
+    {
+        if (!_propertyNameToErrorsDictionary.ContainsKey(propertyName))
+        {
+            _propertyNameToErrorsDictionary.Add(propertyName, new List<string>());
+        }
+        _propertyNameToErrorsDictionary[propertyName].Add(errorMessage);
+        OnErrorChanged(propertyName);
+    }
+
+    private void OnErrorChanged(string propertyName)
+    {
+        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+    }
+
+    private void ClearErros(string propertyName)
+    {
+        _propertyNameToErrorsDictionary.Remove(nameof(propertyName));
+        OnErrorChanged(propertyName);
+    }
+
     private DateTime _endDate = DateTime.Now.AddDays(45);
 
     public ICommand SubmitCommand { get; }
@@ -78,6 +106,7 @@ public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
     {
         SubmitCommand = new MakeReservationCommand(this, hotelStore, reservationViewNavigationService);
         CancelCommand = new NavigateCommand(reservationViewNavigationService);
+        _propertyNameToErrorsDictionary = new Dictionary<string, List<string>>();
     }
 
     public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;

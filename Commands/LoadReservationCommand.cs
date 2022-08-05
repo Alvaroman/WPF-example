@@ -16,9 +16,9 @@ namespace ReserRoom.Commands
             _viewModel = viewModel;
             _hotelStore = hotelStore;
         }
-
         public override async Task ExecuteAsync(object? parameter)
         {
+            _viewModel.ErrorMessage = string.Empty;
             try
             {
                 _viewModel.IsLoading = true;
@@ -27,7 +27,7 @@ namespace ReserRoom.Commands
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed. {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _viewModel.ErrorMessage = $"Failed. {ex.Message}";
             }
             _viewModel.IsLoading = false;
         }

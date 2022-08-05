@@ -8,6 +8,7 @@
            d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:InverterBooleanToVisibilityConvert x:Key="InverterBooleanToVisibilityConvert"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -35,49 +36,52 @@
                Thickness="5"  
                 Diameter="100"
                 IsLoading="{Binding IsLoading}"
-                Color="Gray">
+                Color="Black">
             </custom:LoadingSpinner>
-            <ListView  
-            ItemsSource="{Binding Reservations}"
-            Visibility="{Binding IsLoading, Converter={StaticResource InverterBooleanToVisibilityConvert}}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Room ID">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock HorizontalAlignment="Center" Padding="0 0 20 0" Text="{Binding RoomId}"></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="UserName">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding UserName}" Padding="0 0 20 0"></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Start date">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding StartTime}" Padding="0 0 20 0"></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="End date">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding EndTime}" Padding="0 0 20 0"></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <Grid Visibility="{Binding IsLoading, Converter={StaticResource InverterBooleanToVisibilityConvert}}">
+                <TextBlock Text="{Binding ErrorMessage}"
+                 Visibility="{Binding HasErrorMessage,Converter={StaticResource BooleanToVisibilityConverter}}" Foreground="Red"></TextBlock>
+                <ListView  ItemsSource="{Binding Reservations}" 
+                    Visibility="{Binding HasErrorMessage, Converter={StaticResource InverterBooleanToVisibilityConvert}}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Room ID">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock HorizontalAlignment="Center" Padding="0 0 20 0" Text="{Binding RoomId}"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="UserName">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding UserName}" Padding="0 0 20 0"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Start date">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding StartTime}" Padding="0 0 20 0"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="End date">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding EndTime}" Padding="0 0 20 0"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
