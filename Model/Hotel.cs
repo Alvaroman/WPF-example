@@ -13,6 +13,7 @@ public class Hotel
     }
     public async Task<IEnumerable<Reservation>> GetAllReservations() =>
         await _reservationBook.GetAllReservations();
+    public async Task<IEnumerable<User>> GetAllUsers() => await _reservationBook.GetAllUsers();
 
     /// <summary>
     /// Create a new reservation.
@@ -23,4 +24,5 @@ public class Hotel
     {
         await _reservationBook.AddReservation(reservation);
     }
+    public async Task AddUser(User user) => await _reservationBook.AddUser(user);
 }

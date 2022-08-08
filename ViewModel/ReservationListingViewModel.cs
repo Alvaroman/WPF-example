@@ -42,7 +42,7 @@ public class ReservationListingViewModel : ViewModelBase
     public ReservationListingViewModel(HotelStore hotelStore,
                                        NavigationService makeReservationNavigationService)
     {
-        this._hotelStore = hotelStore;
+        _hotelStore = hotelStore;
         MakeReservationCommand = new NavigateCommand(makeReservationNavigationService);
         LoadReservationCommand = new LoadReservationCommand(this, hotelStore);
         _reservations = new ObservableCollection<ReservationViewModel>();
@@ -71,8 +71,8 @@ public class ReservationListingViewModel : ViewModelBase
         _reservations.Clear();
         foreach (Reservation reservation in reservations)
         {
-            ReservationViewModel reservationViewModewl = new ReservationViewModel(reservation);
-            _reservations.Add(reservationViewModewl);
+            ReservationViewModel reservationViewModel = new ReservationViewModel(reservation);
+            _reservations.Add(reservationViewModel);
         }
     }
 }

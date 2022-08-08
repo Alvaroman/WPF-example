@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReserRoom.DbContexts;
 
@@ -10,9 +11,11 @@ using ReserRoom.DbContexts;
 namespace ReserRoom.Migrations
 {
     [DbContext(typeof(ReserRoomDbContext))]
-    partial class ReserRoomDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220808192018_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0-preview.6.22329.4");

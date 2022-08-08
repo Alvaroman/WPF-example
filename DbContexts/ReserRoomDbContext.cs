@@ -7,4 +7,6 @@ public class ReserRoomDbContext : DbContext
     public ReserRoomDbContext(DbContextOptions options) : base(options) { }
 
     public DbSet<ReservationDTO> Reservation { get; set; }
+    public DbSet<UserDto> User { get; set; }
+
 }

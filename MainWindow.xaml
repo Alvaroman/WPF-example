@@ -17,9 +17,12 @@
                 <DataTemplate DataType="{x:Type vms:ReservationListingViewModel}">
                     <views:ReservationListingView></views:ReservationListingView>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:UserListingViewModel}">
+                    <views:UserListingView></views:UserListingView>
+                </DataTemplate>
             </Grid.Resources>
             <ContentControl Content="{Binding CurrentViewModel}"></ContentControl>
-            <views:ReservationListingView DataContext="{Binding CurrentViewModel}"/>
+            <views:UserListingView DataContext="{Binding CurrentViewModel}"/>
         </Grid>
     </ScrollViewer>
 </Window>

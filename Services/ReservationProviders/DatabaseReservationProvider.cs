@@ -24,10 +24,6 @@ public class DatabaseReservationProvider : IReservationProvider
             return reservationDTOs.Select(r => ToReservation(r));
         }
     }
-    public async Task MakeReservation()
-    {
-
-    }
     private static Reservation ToReservation(ReservationDTO r)
     {
         return new Reservation(new RoomId(r.RoomNumber, r.RoomNumber), r.UserName, r.StartTime, r.EndTime);
