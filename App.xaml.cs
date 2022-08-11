@@ -27,27 +27,34 @@ public partial class App : Application
     private readonly ReservRoomDbContextFactory _reservRoomDbContextFactory;
     public App()
     {
-        _reservRoomDbContextFactory = new ReservRoomDbContextFactory(stringConnection);
-        IReservationProvider reservationProvider = new DatabaseReservationProvider(_reservRoomDbContextFactory);
-        IReservationCreator reservationCreator = new ReservationCreators(_reservRoomDbContextFactory);
-        IReservationConflictValidator reservationConflictValidator = new DatabaseReservationConflictValidator(_reservRoomDbContextFactory);
+        if (true)
+        {
+            new Views.UdemyViews.StyleCustomization().Show();
+        }
+        else
+        {
+            _reservRoomDbContextFactory = new ReservRoomDbContextFactory(stringConnection);
+            IReservationProvider reservationProvider = new DatabaseReservationProvider(_reservRoomDbContextFactory);
+            IReservationCreator reservationCreator = new ReservationCreators(_reservRoomDbContextFactory);
+            IReservationConflictValidator reservationConflictValidator = new DatabaseReservationConflictValidator(_reservRoomDbContextFactory);
 
-        ReservationBook reservationBook = new ReservationBook(reservationProvider, reservationCreator, reservationConflictValidator);
-        _hotelStore = new HotelStore(new Hotel("Pacific Resort", reservationBook));
-        _navigationStore = new NavigationStore();
+            ReservationBook reservationBook = new ReservationBook(reservationProvider, reservationCreator, reservationConflictValidator);
+            _hotelStore = new HotelStore(new Hotel("Pacific Resort", reservationBook));
+            _navigationStore = new NavigationStore();
+        }
     }
     protected override void OnStartup(StartupEventArgs e)
     {
-        using (ReserRoomDbContext dbContext = _reservRoomDbContextFactory.CreateDbContext())
-        {
-            dbContext.Database.Migrate();
-        }
-        _navigationStore.CurrentViewModel = CreateReservationViewModel();
-        MainWindow = new MainWindow()
-        {
-            DataContext = new MainViewModel(_navigationStore)
-        };
-        MainWindow.Show();
+        //using (ReserRoomDbContext dbContext = _reservRoomDbContextFactory.CreateDbContext())
+        //{
+        //    dbContext.Database.Migrate();
+        //}
+        //_navigationStore.CurrentViewModel = CreateReservationViewModel();
+        //MainWindow = new MainWindow()
+        //{
+        //    DataContext = new MainViewModel(_navigationStore)
+        //};
+        //MainWindow.Show();
         base.OnStartup(e);
     }
     private MakeReservationViewModel CreateMakeReservationViewModel()
