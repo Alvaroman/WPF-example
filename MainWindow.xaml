@@ -20,6 +20,7 @@
             </Grid.Resources>
             <ContentControl Content="{Binding CurrentViewModel}"></ContentControl>
             <views:ReservationListingView DataContext="{Binding CurrentViewModel}"/>
+            <TextBlock>Hello page1</TextBlock>
         </Grid>
     </ScrollViewer>
 </Window>

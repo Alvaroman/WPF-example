@@ -1,6 +1,7 @@
 ﻿<Application x:Class="ReserRoom.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="PageTest.xaml"
              xmlns:local="clr-namespace:ReserRoom">
     <Application.Resources>
         <Style  TargetType="Button">

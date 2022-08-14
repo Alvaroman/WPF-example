@@ -10,9 +10,15 @@
         <Style TargetType="Border" x:Key="PaggingTest">
             <Setter Property="BorderBrush" Value="blue"></Setter>
         </Style>
-        <Style TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type Button}" x:Key="Background">
             <Setter Property="Background" Value="AntiqueWhite"></Setter>
             <Setter Property="BorderBrush" Value="DarkOrange"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}" x:Key="Background2">
+            <Setter Property="Background" Value="AntiqueWhite"></Setter>
             <Setter Property="FontSize" Value="20"></Setter>
             <Setter Property="FontWeight" Value="Bold"></Setter>
             <Setter Property="Margin" Value="5"></Setter>
@@ -20,7 +26,7 @@
         <SolidColorBrush x:Key="defaultBackground" Color="Gray"></SolidColorBrush>
     </Window.Resources>
     <StackPanel>
-        <Button>Click!!!</Button>
+        <!--<Button>Click!!!</Button>
         <Label>Testing</Label>
         <Button>Click 2!!!</Button>
         <Button Background="{StaticResource defaultBackground}">Click!!</Button>
@@ -30,7 +36,7 @@
             <Label.Background>
                 <SolidColorBrush Color="Cyan"></SolidColorBrush>
             </Label.Background>
-        </Label>
+        </Label>-->
         <!--<StackPanel>
             <Button Width="200" Height="100">
                 <Rectangle Width="200" Height="100">
@@ -46,7 +52,7 @@
                 </Rectangle>
             </Button>
         </StackPanel>-->
-        <StackPanel>
+        <StackPanel Name="TestContainer">
             <!--<Button>
                 <Button.Content>Click on me</Button.Content>
             </Button>
@@ -70,14 +76,14 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Button>
+            <!--<Button>
                 Clicking!
             </Button>
             <Rectangle Width="200" Height="50">
                 <Rectangle.Fill>
                     <SolidColorBrush>Blue</SolidColorBrush>
                 </Rectangle.Fill>
-            </Rectangle>
+            </Rectangle>-->
         </StackPanel>
         <Grid>
             <TextBlock Text="Testing 123 3465"></TextBlock>
@@ -87,6 +93,20 @@
                     <TextBlock>Hi world!</TextBlock>
                 </StackPanel>
             </Border>
+            <Button>
+                Testing
+            </Button>
+            <Button x:Name="Testing" >
+                <Button.Content>Testing again and again</Button.Content>
+                <Button.Margin>
+                    <Thickness Left="30" Top="90" Right="50" Bottom="30"></Thickness>
+                </Button.Margin>
+            </Button>
         </Grid>
+        <TextBlock Name="Navigating" Style="{StaticResource ResourceKey=Background2}">
+            <TextBlock>Hello page1</TextBlock>
+            <LineBreak/>
+            <Hyperlink NavigateUri="Page1.xaml">Navigate</Hyperlink>
+        </TextBlock>
     </StackPanel>
 </Window>

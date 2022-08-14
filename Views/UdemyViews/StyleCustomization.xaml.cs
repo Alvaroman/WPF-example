@@ -26,7 +26,16 @@ namespace ReserRoom.Views.UdemyViews
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            var button = (Button)e.Source;
+            button.Background = Brushes.Chocolate;
             MessageBox.Show("Testing");
+
+            var element = (FrameworkElement)e.Source;
+            if (TestContainer.Children.Contains(element))
+            {
+                TestContainer.Children.Remove(element);
+            }
+
         }
     }
 }
